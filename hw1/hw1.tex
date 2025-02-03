@@ -1,0 +1,119 @@
+\documentclass{../../../kin_math}
+
+\header{Elijah Kin}{Homework 1}{AMSC698K}
+\headrule
+
+\begin{document}
+
+\begin{questions}
+  \question Show that the Pauli matrices $X$, $Y$, $Z$ together with the identity matrix $I_2$ build a complete basis for $2 \times 2$ matrices over the set of complex numbers (quaternion space).
+  \begin{solution}
+    We claim first that the set $\{X, Y, Z, I_2\}$ of Pauli matrices together with the identity matrix spans $\mathbb{C}^{2 \times 2}$. Let $A \in \mathbb{C}^{2 \times 2}$, in which case we can write
+    \begin{equation*}
+      A = \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix}
+    \end{equation*}
+    where $\alpha$, $\beta$, $\gamma$, $\delta \in \mathbb{C}$. Further, we recall that
+    \begin{equation*}
+      X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}, \quad Y = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix}, \quad Z = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}, \quad I_2 = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}.
+    \end{equation*}
+    We now seek $a_1, a_2, a_3, a_4 \in \mathbb{C}$ such that
+    \begin{equation*}
+      \begin{bmatrix} \alpha & \beta \\ \gamma & \delta \end{bmatrix} = A = a_1 X + a_2 Y + a_3 Z + a_4 I_2 = \begin{bmatrix} a_3 + a_4 & a_1 - a_2i \\ a_1 + a_2i & -a_3 + a_4 \end{bmatrix},
+    \end{equation*}
+    and so we see that $a_1 = \frac{1}{2}(\beta + \gamma)$, $a_2 = \frac{i}{2}(\beta - \gamma)$, $a_3 = \frac{1}{2}(\alpha - \delta)$ and $a_4 = \frac{1}{2}(\alpha + \delta)$. Hence, we have written our arbitrary $A \in \mathbb{C}^{2 \times 2}$ as the linear combination
+    \begin{equation*}
+      \frac{1}{2}(\beta + \gamma)X + \frac{i}{2}(\beta - \gamma)Y + \frac{1}{2}(\alpha - \delta)Z + \frac{1}{2}(\alpha + \delta)I_2
+    \end{equation*}
+    of $\{X, Y, Z, I_2\}$, meaning that this set spans $\mathbb{C}^{2 \times 2}$.
+
+    It remains to show that $\{X, Y, Z, I_2\}$ is linearly independent. Suppose we have that
+    \begin{equation*}
+      \begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix} = a_1 X + a_2 Y + a_3 Z + a_4 I_2 = \begin{bmatrix} a_3 + a_4 & a_1 - a_2i \\ a_1 + a_2i & -a_3 + a_4 \end{bmatrix}.
+    \end{equation*}
+    Then since $a_1 + a_2i = a_1 - a_2i$, it must be that $a_2 = 0$, and likewise, since $a_3 + a_4 = -a_3 + a_4$, it must be that $a_3 = 0$. It follows that $a_1 = a_4 = 0$ also, and so the equation above has only the trivial solution. Hence, $\{X, Y, Z, I_2\}$ is linearly independent. Since it also spans $\mathbb{C}^{2 \times 2}$, it is a basis for $\mathbb{C}^{2 \times 2}$.
+  \end{solution}
+
+  \question Pauli matrices are often denoted as $\sigma_j$ ($j = x, y, z$), with $\sigma_x = X$, $\sigma_y = Y$, $\sigma_z = Z$, and combined to a vector of matrices: $\vec{\sigma} = (X, Y, Z)^\top$.
+
+  Show that a qubit oriented in an arbitrary direction $\vec{n} = (n_x, n_y, n_z)^\top$ on the Bloch sphere can be represented as $\vec{n} \cdot \vec{\sigma}$, where `$\cdot$' denotes the scalar product (dot-product) of vectors:
+  \begin{equation*}
+    \vec{a} \cdot \vec{b} = \vec{a}^\top \vec{b} = \sum_i a_i b_i.
+  \end{equation*}
+  What are the elements of the resulting matrix?
+  \begin{solution}
+    By the definition of dot product, we know the elements of the resulting matrix:
+    \begin{multline*}
+      \vec{n} \cdot \vec{\sigma} = n_x X + n_y Y + n_z Z = \begin{bmatrix} 0 & n_x \\ n_x & 0 \end{bmatrix} + \begin{bmatrix} 0 & -in_y \\ in_y & 0 \end{bmatrix} + \begin{bmatrix} n_z & 0 \\ 0 & -n_z \end{bmatrix} \\
+      = \begin{bmatrix} n_z & n_x - in_y \\ n_x + in_y & -n_z \end{bmatrix}.
+    \end{multline*}
+    It now suffices to show that there exists such an $\vec{n}$ any direction on the Bloch sphere; recall the directions on the Bloch sphere are parameterized by angles $\theta$ and $\varphi$. We can then simply define
+    \begin{equation*}
+      \vec{n} = (n_x, n_y, n_z)^\top = (\sin(\theta)\cos(\varphi), \sin(\theta)\sin(\varphi), \cos(\theta))^\top.
+    \end{equation*}
+  \end{solution}
+
+  \question The exponentiation of a square matrix $A$ can be regarded as exponentiation of each matrix element $a_{ij}$ or as short form for the power series (for any $\lambda \in \mathbb{C}$):
+  \begin{equation*}
+    e^{\lambda A} = \sum_{n = 0}^\infty \frac{\lambda^n A^n}{n!}.
+  \end{equation*}
+  Show that for an involutory $n \times n$ matrix $A$: $e^{i \varphi A} = I_n \cos(\varphi) + iA \sin(\varphi)$, where $I_n$ is the $n$-dimensional identity matrix.
+  \begin{solution}
+    Let $A \in \mathbb{C}^{n \times n}$ be involutory, meaning that $A^2 = I_n$. Then regarding the matrix exponentiation as a power series, we can split the series into even and odd terms
+    \begin{equation*}
+      e^{i \varphi A} = \sum_{k = 0}^\infty \frac{(i \varphi)^k A^k}{k!} = \sum_{k = 0}^\infty \frac{(i \varphi)^{2k} A^{2k}}{(2k)!} + \sum_{k = 0}^\infty \frac{(i \varphi)^{2k + 1} A^{2k + 1}}{(2k + 1)!}.
+    \end{equation*}
+    But then note that since $A$ is involutory, $A^{2k} = I_n$ and $A^{2k + 1} = A$. Hence,
+    \begin{equation*}
+      e^{i \varphi A} = \sum_{k = 0}^\infty \frac{(i \varphi)^{2k} I_n}{(2k)!} + \sum_{k = 0}^\infty \frac{(i \varphi)^{2k + 1} A}{(2k + 1)!}
+    \end{equation*}
+    Further, $(i \varphi)^{2k} = i^{2k} \varphi^{2k} = (-1)^k \varphi^{2k}$ and therefore $(i \varphi)^{2k + 1} = (-1)^k \varphi^{2k + 1} i$, meaning
+    \begin{equation*}
+      e^{i \varphi A} = \sum_{k = 0}^\infty \frac{(-1)^k \varphi^{2k} I_n}{(2k)!} + \sum_{k = 0}^\infty \frac{(-1)^k \varphi^{2k + 1} i A}{(2k + 1)!} = I_n\sum_{k = 0}^\infty \frac{(-1)^k \varphi^{2k}}{(2k)!} + Ai \sum_{k = 0}^\infty \frac{(-1)^k \varphi^{2k + 1}}{(2k + 1)!}.
+    \end{equation*}
+    Finally, recognize that these sums are the Maclaurin series for $\cos$ and $\sin$ respectively, meaning that
+    \begin{equation*}
+      e^{i \varphi A} = I_n \cos(\varphi) + iA \sin(\varphi)
+    \end{equation*}
+    as desired.
+  \end{solution}
+
+  \question A rotation about the $x$-, $y$-, or $z$-axis in $2$-state quantum systems (e.g. electron spin or qubit) is realized by $R_j(\theta) = e^{-\frac{i}{2} \sigma_j \theta}$ (with $j = x, y, z$).
+  \begin{enumerate}
+    \item Show that: $R_j(\theta) \equiv e^{-\frac{i}{2} \sigma_j \theta} = I_2 \cos(\theta / 2) - i \sigma_j \sin(\theta / 2)$.
+    \begin{solution}
+      Observe first that
+      \begin{align*}
+        \sigma_x^2 &= \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \\
+        \sigma_y^2 &= \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix} \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \\
+        \sigma_z^2 &= \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix} \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
+      \end{align*}
+      and hence $\sigma_j$ is involutory for each $j = x, y, z$. Therefore, we will apply the result of the previous question. In particular,
+      \begin{equation*}
+        R_j(\theta) \equiv e^{-\frac{i}{2} \sigma_j \theta} = e^{i(- \theta / 2) \sigma_j} = I_2 \cos(-\theta / 2) + i \sigma_j \sin(-\theta / 2).
+      \end{equation*}
+      Finally, recall that $\cos$ is an even function, so $\cos(-\theta / 2) = \cos(\theta / 2)$, and likewise $\sin$ is an odd function, so $\sin(-\theta / 2) = -\sin(\theta / 2)$. Therefore, we have that
+      \begin{equation*}
+        R_j(\theta) = I_2 \cos(\theta / 2) - i \sigma_j \sin(\theta / 2)
+      \end{equation*}
+      as desired.
+    \end{solution}
+    \item Show that a rotation about an arbitrary axis $\vec{n} = (n_x, n_y, n_z)^\top$ can be written as $R_{\vec{n}}(\theta) = e^{-\frac{i}{2} \vec{n} \cdot \vec{\sigma} \theta} = I_2 \cos(\theta / 2) - i \vec{n} \cdot \vec{\sigma} \sin(\theta / 2)$.
+    \begin{solution}
+      First recall the matrix $\vec{n} \cdot \vec{\sigma}$ from earlier and note that
+      \begin{equation*}
+        (\vec{n} \cdot \vec{\sigma})^2 = \begin{bmatrix} n_z & n_x - in_y \\ n_x + in_y & -n_z \end{bmatrix} \begin{bmatrix} n_z & n_x - in_y \\ n_x + in_y & -n_z \end{bmatrix} = \begin{bmatrix} n_x^2 + n_y^2 + n_z^2 & 0 \\ 0 & n_x^2 + n_y^2 + n_z^2 \end{bmatrix}
+      \end{equation*}
+      and since $\vec{n} = (n_x, n_y, n_z)^\top$ denotes a direction on the unit sphere, $n_x^2 + n_y^2 + n_z^2 = 1$, meaning $(\vec{n} \cdot \vec{\sigma})^2 = I_2$, so $\vec{n} \cdot \vec{\sigma}$ is involutory. Hence,
+      \begin{equation*}
+        e^{-\frac{i}{2} \vec{n} \cdot \vec{\sigma} \theta} = e^{i (-\theta / 2) \vec{n} \cdot \vec{\sigma}} = I_2 \cos(-\theta / 2) + i \vec{n} \cdot \vec{\sigma} \sin(-\theta / 2).
+      \end{equation*}
+      Finally, since $\cos$ is an even function and $\sin$ is an odd function, we have that
+      \begin{equation*}
+        e^{-\frac{i}{2} \vec{n} \cdot \vec{\sigma} \theta} = I_2 \cos(\theta / 2) - i \vec{n} \cdot \vec{\sigma} \sin(\theta / 2)
+      \end{equation*}
+      as desired.
+    \end{solution}
+  \end{enumerate}
+\end{questions}
+
+\end{document}
